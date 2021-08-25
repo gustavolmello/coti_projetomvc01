@@ -16,5 +16,3 @@ namespace ProjetoAspNetMVC01.Repository.Entities
         public string Prioridade { get; set; }
     }
 }
-
-

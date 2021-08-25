@@ -16,5 +16,3 @@ namespace ProjetoAspNetMVC01.Repository.Interfaces
         T ObterPorId(Guid id);
     }
 }
-
-

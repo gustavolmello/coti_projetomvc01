@@ -28,5 +28,3 @@ namespace ProjetoAspNetMVC01.Presentation.Models
         public string Prioridade { get; set; }
     }
 }
-
-

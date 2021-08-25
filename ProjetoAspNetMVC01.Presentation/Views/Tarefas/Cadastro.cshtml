@@ -15,7 +15,7 @@
     <!-- linha -->
     <div class="row">
         <div class="col-md-6">
-
+            
             <!-- campo para preenchimento do nome da tarefa -->
             <label>Nome da tarefa:</label>
             @Html.TextBoxFor(model => model.Nome, new { @class = "form-control" })
@@ -71,7 +71,6 @@
 
             @Html.RadioButtonFor(model => model.Prioridade, "ALTA") <label>Prioridade Alta</label>
             <br />
-            
 
             <span class="text-danger">
                 @Html.ValidationMessageFor(model => model.Prioridade)
@@ -80,9 +79,9 @@
         </div>
     </div>
 
-    <br />
+    <br/>
 
     <input type="submit" value="Realizar Cadastro"
-           class="btn btn-success" />
+           class="btn btn-success"/>
 
 }
