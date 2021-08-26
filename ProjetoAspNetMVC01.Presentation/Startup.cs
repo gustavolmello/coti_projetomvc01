@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ProjetoAspNetMVC01.Repository.Interfaces;
+using ProjetoAspNetMVC01.Repository.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +26,13 @@ namespace ProjetoAspNetMVC01.Presentation
         {
             //definir o padrão de navegação do projeto (CONTROLLER/VIEW)
             services.AddControllersWithViews();
+
+            //ler a connectionstring mapeada no arquivo /appsettings.json
+            var connectionstring = Configuration.GetConnectionString("Projeto01");
+
+            //configurando uma injeção de dependência (inicialização automática)
+            services.AddTransient<ITarefaRepository, TarefaRepository>
+                (map => new TarefaRepository(connectionstring));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

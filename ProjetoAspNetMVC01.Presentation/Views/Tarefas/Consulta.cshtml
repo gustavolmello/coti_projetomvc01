@@ -1,4 +1,5 @@
-﻿
+﻿@model ProjetoAspNetMVC01.Presentation.Models.TarefasConsultaModel
+
 @{
     ViewData["Title"] = "Consulta";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,3 +10,79 @@
     Listagem de tarefas cadastradas.
 </p>
 
+@using (Html.BeginForm())
+{
+    <p>
+        Selecione o período de datas desejado para a consulta:
+    </p>
+
+    <div class="row">
+        <div class="col-md-3">
+            @Html.TextBoxFor(model => model.DataMin, new { @class = "form-control", @type = "date" })
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.DataMin)
+            </span>
+        </div>
+        <div class="col-md-3">
+            @Html.TextBoxFor(model => model.DataMax, new { @class = "form-control", @type = "date" })
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.DataMax)
+            </span>
+        </div>
+        <div class="col-md-6">
+            <input type="submit" value="Pesquisar Tarefas" class="btn btn-success" />
+        </div>
+    </div>
+}
+
+<br />
+
+@if (Model != null && Model.Tarefas != null)
+{
+    <table class="table table-hover table-bordered table-sm">
+        <thead class="bg-secondary text-white">
+            <tr>
+                <th>Nome da tarefa</th>
+                <th>Data</th>
+                <th>Hora</th>
+                <th>Descrição</th>
+                <th>Prioridade</th>
+                <th>Operações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Tarefas)
+            {
+                <tr>
+                    <td>@item.Nome</td>
+                    <td>@item.Data.ToString("dddd dd/MM/yyyy")</td>
+                    <td>@item.Hora.ToString(@"hh\:mm")</td>
+                    <td>@item.Descricao</td>
+                    <td>
+                        @if (item.Prioridade.Equals("BAIXA"))
+                        {
+                            <span class="badge bg-success">Baixa</span>
+                        }
+                        else if (item.Prioridade.Equals("MEDIA"))
+                        {
+                            <span class="badge bg-warning">Média</span>
+                        }
+                        else if (item.Prioridade.Equals("ALTA"))
+                        {
+                            <span class="badge bg-danger">Alta</span>
+                        }
+                    </td>
+                    <td>
+                        <a href="#" class="btn btn-primary btn-sm">Alterar</a>
+                        <a href="#" class="btn btn-danger btn-sm">Excluir</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6">Quantidade de tarefas: @Model.Tarefas.Count</td>
+            </tr>
+        </tfoot>
+    </table>
+}
