@@ -1,0 +1,91 @@
+﻿@model ProjetoAspNetMVC01.Presentation.Models.TarefasEdicaoModel
+
+@{
+    ViewData["Title"] = "Edicao";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h5>Atualizar dados da tarefa</h5>
+<p>
+    Utilize o formulário para atualizar a tarefa.
+</p>
+
+@using (Html.BeginForm())
+{
+    <!-- campo oculto -->
+    @Html.HiddenFor(model => model.IdTarefa)
+
+    <!-- linha -->
+    <div class="row">
+        <div class="col-md-6">
+
+            <!-- campo para preenchimento do nome da tarefa -->
+            <label>Nome da tarefa:</label>
+            @Html.TextBoxFor(model => model.Nome, new { @class = "form-control" })
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.Nome)
+            </span>
+
+        </div>
+        <div class="col-md-3">
+
+            <!-- campo para preenchimento da data da tarefa -->
+            <label>Data da tarefa:</label>
+            @Html.TextBoxFor(model => model.Data, new { @class = "form-control", @type = "date" })
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.Data)
+            </span>
+
+        </div>
+        <div class="col-md-3">
+
+            <!-- campo para preenchimento da hora da tarefa -->
+            <label>Hora da tarefa:</label>
+            @Html.TextBoxFor(model => model.Hora, new { @class = "form-control", @type = "time" })
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.Hora)
+            </span>
+
+        </div>
+    </div>
+
+    <!-- linha -->
+    <div class="row mt-3">
+        <div class="col-md-9">
+
+            <!-- campo para preenchimento da descrição da tarefa -->
+            <label>Descrição da tarefa:</label>
+            @Html.TextAreaFor(model => model.Descricao, new { @class = "form-control", @rows = "4" })
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.Descricao)
+            </span>
+
+        </div>
+        <div class="col-md-3">
+
+            <br />
+
+            <!-- campo para preenchimento da prioridade da tarefa -->
+            @Html.RadioButtonFor(model => model.Prioridade, "BAIXA") <label>Prioridade Baixa</label>
+            <br />
+
+            @Html.RadioButtonFor(model => model.Prioridade, "MEDIA") <label>Prioridade Média</label>
+            <br />
+
+            @Html.RadioButtonFor(model => model.Prioridade, "ALTA") <label>Prioridade Alta</label>
+            <br />
+
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.Prioridade)
+            </span>
+
+        </div>
+    </div>
+
+    <br />
+
+    <input type="submit" value="Salvar Alterações"
+           class="btn btn-primary" />
+
+}
+

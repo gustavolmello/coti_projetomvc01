@@ -39,8 +39,8 @@
 
 @if (Model != null && Model.Tarefas != null)
 {
-    <table class="table table-hover table-bordered table-sm">
-        <thead class="bg-secondary text-white">
+    <table id="consulta-tarefas" class="table table-hover table-sm">
+        <thead>
             <tr>
                 <th>Nome da tarefa</th>
                 <th>Data</th>
@@ -73,8 +73,15 @@
                         }
                     </td>
                     <td>
-                        <a href="#" class="btn btn-primary btn-sm">Alterar</a>
-                        <a href="#" class="btn btn-danger btn-sm">Excluir</a>
+                        <a href="/Tarefas/Edicao?id=@item.IdTarefa"
+                           class="btn btn-primary btn-sm">
+                            Alterar
+                        </a>
+                        <a href="/Tarefas/Exclusao?id=@item.IdTarefa"
+                           onclick="return confirm('Deseja excluir a tarefa @item.Nome?');"
+                           class="btn btn-danger btn-sm">
+                            Excluir
+                        </a>
                     </td>
                 </tr>
             }
@@ -85,4 +92,30 @@
             </tr>
         </tfoot>
     </table>
+    <br />
+    <br />
 }
+
+@section styles {
+
+    <!-- referencias para arquivos CSS -->
+    <link href="~/css/jquery.dataTables.min.css" rel="stylesheet" />
+}
+
+@section scripts {
+
+    <!-- referencias para os arquivos do jquery -->
+    <script src="~/js/jquery-3.6.0.min.js"></script>
+    <script src="~/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#consulta-tarefas').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/Portuguese-Brasil.json'
+                }
+            });
+        });
+    </script>
+}
+

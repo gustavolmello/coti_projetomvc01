@@ -20,7 +20,7 @@ namespace ProjetoAspNetMVC01.Presentation.Controllers
         public IActionResult Cadastro(TarefasCadastroModel model, [FromServices] ITarefaRepository tarefaRepository)
         {
             //verificar se todos os campos passaram nas regras de validação
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -44,7 +44,7 @@ namespace ProjetoAspNetMVC01.Presentation.Controllers
                     //limpar os campos do formulário
                     ModelState.Clear();
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     TempData["MensagemErro"] = $"Erro {e.Message}";
                 }
@@ -62,7 +62,7 @@ namespace ProjetoAspNetMVC01.Presentation.Controllers
         public IActionResult Consulta(TarefasConsultaModel model, [FromServices] ITarefaRepository tarefaRepository)
         {
             //verificar não há erros de validação no preenchimento dos campos
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -70,7 +70,7 @@ namespace ProjetoAspNetMVC01.Presentation.Controllers
                     model.Tarefas = tarefaRepository.ConsultarPorDatas
                         (DateTime.Parse(model.DataMin), DateTime.Parse(model.DataMax));
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     TempData["MensagemErro"] = $"Erro: {e.Message}";
                 }
@@ -80,9 +80,86 @@ namespace ProjetoAspNetMVC01.Presentation.Controllers
             return View(model);
         }
 
+        public IActionResult Edicao(Guid id, [FromServices] ITarefaRepository tarefaRepository)
+        {
+            var model = new TarefasEdicaoModel();
+
+            try
+            {
+                //consultar os dados da tarefa no banco atraves do ID..
+                var tarefa = tarefaRepository.ObterPorId(id);
+
+                //transferir os dados da tarefa para a classe model
+                model.IdTarefa = tarefa.IdTarefa;
+                model.Nome = tarefa.Nome;
+                model.Data = tarefa.Data.ToString("yyyy-MM-dd");
+                model.Hora = tarefa.Hora.ToString(@"hh\:mm");
+                model.Descricao = tarefa.Descricao;
+                model.Prioridade = tarefa.Prioridade;
+            }
+            catch (Exception e)
+            {
+                TempData["MensagemErro"] = $"Erro: {e.Message}";
+            }
+
+            return View(model);
+        }
+
+        [HttpPost] //recebe os dados enviados pelo formulário (SUBMIT)
+        public IActionResult Edicao(TarefasEdicaoModel model, [FromServices] ITarefaRepository tarefaRepository)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    var tarefa = new Tarefa();
+
+                    tarefa.IdTarefa = model.IdTarefa;
+                    tarefa.Nome = model.Nome;
+                    tarefa.Data = DateTime.Parse(model.Data);
+                    tarefa.Hora = TimeSpan.Parse(model.Hora);
+                    tarefa.Descricao = model.Descricao;
+                    tarefa.Prioridade = model.Prioridade;
+
+                    tarefaRepository.Alterar(tarefa);
+
+                    TempData["MensagemSucesso"] = $"Tarefa {tarefa.Nome} atualizada com sucesso.";
+                }
+                catch (Exception e)
+                {
+                    TempData["MensagemErro"] = $"Erro: {e.Message}";
+                }
+            }
+
+            return View();
+        }
+
+        public IActionResult Exclusao(Guid id, [FromServices] ITarefaRepository tarefaRepository)
+        {
+            try
+            {
+                //consultar a tarefa no banco de dados atraves do ID..
+                var tarefa = tarefaRepository.ObterPorId(id);
+
+                //excluindo a tarefa no banco de dados..
+                tarefaRepository.Excluir(tarefa);
+
+                TempData["MensagemSucesso"] = $"Tarefa {tarefa.Nome}, excluída com sucesso.";
+            }
+            catch (Exception e)
+            {
+                TempData["MensagemErro"] = $"Erro: {e.Message}";
+            }
+
+            //redirecionamento para a página de consulta
+            return RedirectToAction("Consulta");
+        }
+
         public IActionResult Relatorio()
         {
             return View();
         }
     }
 }
+
+
