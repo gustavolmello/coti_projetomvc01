@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ProjetoAspNetMVC01.Messages\ProjetoAspNetMVC01.Messages.csproj" />
     <ProjectReference Include="..\ProjetoAspNetMVC01.Repository\ProjetoAspNetMVC01.Repository.csproj" />
   </ItemGroup>
 

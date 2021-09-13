@@ -1,0 +1,87 @@
+﻿@model ProjetoAspNetMVC01.Presentation.Models.AccountLoginModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login de Usuário</title>
+
+    <!-- Folha de estilos CSS do bootstrap -->
+    <link href="~/css/bootstrap.css" rel="stylesheet" />
+
+</head>
+<body class="bg-secondary">
+
+    <div class="row">
+        <div class="col-md-4 offset-md-4">
+
+            <div class="card mt-5">
+
+                <div class="card-body">
+
+                    <div class="text-center">
+                        <img src="https://www.cotiinformatica.com.br/imagens/logo-coti-informatica.png" class="img-fluid" />
+                        <h5>Acesso ao Sistema</h5>
+                        <hr />
+                    </div>
+
+                    @using (Html.BeginForm())
+                    {
+                        <label>Email de acesso:</label>
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                        <div class="text-danger">
+                            @Html.ValidationMessageFor(model => model.Email)
+                        </div>
+                        <br />
+
+                        <label>Senha de acesso:</label>
+                        @Html.PasswordFor(model => model.Senha, new { @class = "form-control" })
+                        <div class="text-danger">
+                            @Html.ValidationMessageFor(model => model.Senha)
+                        </div>
+                        <div class="text-end">
+                            <a href="/Account/PasswordRecover">Esqueci minha senha?</a>
+                        </div>
+                        <br />
+
+                        <div class="d-grid">
+                            <input type="submit" value="Acessar Sistema" class="btn btn-dark" />
+                        </div>
+
+                    }
+
+                    <div class="d-grid">
+                        <a href="/Account/Register" class="btn btn-light">Criar conta de acesso</a>
+                    </div>
+
+                    @if (TempData["MensagemErro"] != null)
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                            <strong>Falha!</strong> @TempData["MensagemErro"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+            <div class="text-center text-white mt-2">
+                <small>COTI Informática - Agenda de tarefas v1.0</small>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- javascript do bootstrap -->
+    <script src="~/js/bootstrap.js"></script>
+
+</body>
+</html>
+
+

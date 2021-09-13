@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProjetoAspNetMVC01.Presentation.Models;
 using ProjetoAspNetMVC01.Repository.Entities;
 using ProjetoAspNetMVC01.Repository.Interfaces;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace ProjetoAspNetMVC01.Presentation.Controllers
 {
+    [Authorize]
     public class TarefasController : Controller
     {
         public IActionResult Cadastro()

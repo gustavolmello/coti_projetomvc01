@@ -13,8 +13,8 @@
     <!-- Arquivos de folha de estilo CSS -->
     <link href="~/css/bootstrap.css" rel="stylesheet" />
 
-    <!-- seção para conteúdo CSS -->
-    @RenderSection("styles", required : false)
+    <!-- seção para conteudo CSS -->
+    @RenderSection("styles", required: false)
 
 </head>
 <body>
@@ -41,7 +41,25 @@
                             <li><a class="dropdown-item" href="/Tarefas/Relatorio">Relatório de tarefas</a></li>
                         </ul>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Minha Conta
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/Usuarios/DadosDaConta">Dados da conta</a></li>
+                            <li><a class="dropdown-item" href="/Usuarios/AlterarSenha">Alterar minha senha</a></li>
+                        </ul>
+                    </li>
                 </ul>
+                <form class="d-flex">
+                    <span class="text-white mt-3" style="margin-right: 20px;">
+                        @User.Identity.Name
+                    </span>
+                    <a href="/Account/Logout" class="btn btn-outline-secondary mt-2"
+                       onclick="return confirm('Deseja realmente sair do sistema?')">
+                        Sair do Sistema
+                    </a>
+                </form>
             </div>
         </div>
     </nav>
@@ -70,8 +88,14 @@
     <!-- Arquivos de extensão JS (javascript) -->
     <script src="~/js/bootstrap.js"></script>
 
-    <!-- seção para conteúdo javascript -->
-    @RenderSection("scripts", required : false) 
+    <!-- seção para conteudo javascript -->
+    @RenderSection("scripts", required: false)
 
 </body>
 </html>
+
+
+
+
+
+
