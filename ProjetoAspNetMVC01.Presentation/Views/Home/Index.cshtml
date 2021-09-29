@@ -2,7 +2,71 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h5>Seja bem vindo ao projeto!</h5>
-<p>
-    Sistema desenvolvido em AspNet5 MVC com Dapper e SqlServer.
-</p>
+<div class="row">
+    <div class="col-md-6">
+        <h2>Seja bem vindo ao projeto!</h2>
+        <p>
+            Sistema desenvolvido em AspNet5 MVC com Dapper e SqlServer.
+        </p>
+        <p>
+            Treinamento em C# WebDeveloper - COTI Informática
+        </p>
+        <p>
+            <a href="http://www.cotiinformatica.com.br" target="_blank">http://www.cotiinformatica.com.br</a>
+        </p>
+    </div>
+    <div class="col-md-6">
+        <div id="grafico"></div>
+    </div>
+</div>
+
+@section scripts {
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+
+    <script>
+
+        var array = [];
+
+        //dados do gráfico
+        array.push(['ALTA', @TempData["PrioridadeAlta"]]);
+        array.push(['MEDIA', @TempData["PrioridadeMedia"]]);
+        array.push(['BAIXA', @TempData["PrioridadeBaixa"]]);
+
+        new Highcharts.Chart({
+            chart: {
+                type: 'pie',
+                renderTo: 'grafico'
+            },
+            title: {
+                text: 'Tarefas por prioridade'
+            },
+            plotOptions: {
+                pie: {
+                    innerSize: '60%',
+                    dataLabels: {
+                        enable: true
+                    },
+                    showInLegend: true
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                data: array
+            }],
+            colors: ['#d9534f', '#f0ad4e', '#5cb85c']
+        });
+
+    </script>
+
+}
+
+
+
+
+

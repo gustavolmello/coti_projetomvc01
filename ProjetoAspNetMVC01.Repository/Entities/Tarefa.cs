@@ -14,5 +14,6 @@ namespace ProjetoAspNetMVC01.Repository.Entities
         public TimeSpan Hora { get; set; }
         public string Descricao { get; set; }
         public string Prioridade { get; set; }
+        public Guid IdUsuario { get; set; }
     }
 }

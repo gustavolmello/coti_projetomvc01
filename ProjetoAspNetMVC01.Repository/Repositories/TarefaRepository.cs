@@ -26,8 +26,8 @@ namespace ProjetoAspNetMVC01.Repository.Repositories
         public void Inserir(Tarefa obj)
         {
             var query = @"
-                    INSERT INTO TAREFA(IDTAREFA, NOME, DATA, HORA, DESCRICAO, PRIORIDADE)
-                    VALUES(@IdTarefa, @Nome, @Data, @Hora, @Descricao, @Prioridade)
+                    INSERT INTO TAREFA(IDTAREFA, NOME, DATA, HORA, DESCRICAO, PRIORIDADE, IDUSUARIO)
+                    VALUES(@IdTarefa, @Nome, @Data, @Hora, @Descricao, @Prioridade, @IdUsuario)
                 ";
 
             using (var connection = new SqlConnection(_connectionstring))
@@ -48,6 +48,8 @@ namespace ProjetoAspNetMVC01.Repository.Repositories
                         PRIORIDADE = @Prioridade
                     WHERE
                         IDTAREFA = @IdTarefa
+                    AND
+                        IDUSUARIO = @IdUsuario
                 ";
 
             using (var connection = new SqlConnection(_connectionstring))
@@ -61,6 +63,7 @@ namespace ProjetoAspNetMVC01.Repository.Repositories
             var query = @"
                     DELETE FROM TAREFA 
                     WHERE IDTAREFA = @IdTarefa
+                    AND IDUSUARIO = @IdUsuario
                 ";
 
             using (var connection = new SqlConnection(_connectionstring))
@@ -99,20 +102,41 @@ namespace ProjetoAspNetMVC01.Repository.Repositories
             }
         }
 
-        public List<Tarefa> ConsultarPorDatas(DateTime dataMin, DateTime dataMax)
+        public List<Tarefa> ConsultarPorDatas(DateTime dataMin, DateTime dataMax, Guid idUsuario)
         {
             var query = @"
                     SELECT * FROM TAREFA
-                    WHERE DATA BETWEEN @dataMin AND @dataMax
+                    WHERE DATA BETWEEN @dataMin AND @dataMax AND IDUSUARIO = @idUsuario
                     ORDER BY DATA DESC, HORA DESC
                 ";
 
             using (var connection = new SqlConnection(_connectionstring))
             {
                 return connection
-                    .Query<Tarefa>(query, new { dataMin, dataMax })
+                    .Query<Tarefa>(query, new { dataMin, dataMax, idUsuario })
+                    .ToList();
+            }
+        }
+
+        public List<Tarefa> ConsultarPorUsuario(Guid idUsuario)
+        {
+            var query = @"
+                    SELECT * FROM TAREFA
+                    WHERE IDUSUARIO = @idUsuario
+                    ORDER BY DATA DESC, HORA DESC
+                ";
+
+            using (var connection = new SqlConnection(_connectionstring))
+            {
+                return connection
+                    .Query<Tarefa>(query, new { idUsuario })
                     .ToList();
             }
         }
     }
 }
+
+
+
+
+

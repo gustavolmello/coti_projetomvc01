@@ -9,6 +9,8 @@ namespace ProjetoAspNetMVC01.Repository.Interfaces
 {
     public interface ITarefaRepository : IBaseRepository<Tarefa>
     {
-        List<Tarefa> ConsultarPorDatas(DateTime dataMin, DateTime dataMax);
+        List<Tarefa> ConsultarPorUsuario(Guid idUsuario);
+        List<Tarefa> ConsultarPorDatas(DateTime dataMin, DateTime dataMax, Guid idUsuario);
     }
 }
+
